@@ -1,0 +1,14 @@
+http:
+  host: "127.0.0.1"
+  port: 8000
+
+mongodb:
+  name: "mongo"
+  host: "127.0.0.1"
+  port: 27017
+
+etherscan-api:
+  url: "https://api.etherscan.io/api"
+  # 'req-delay' must be more than 0.5s (the free api version offers 5 requests per second, but we made the gap bigger)
+  req-delay: 1s
+  key: JIY6GVHDPZYNDHDCD3B3NJYSN35PDX1KNX

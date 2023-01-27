@@ -1,0 +1,30 @@
+### transactions
+POST  http://127.0.0.1:8000/api/v1/transactions/
+Content-Type: application/json
+
+{
+  "page": 1,
+  "page_size": 10,
+  "hash": "",
+  "from": "",
+  "to": "",
+  "block_num": 0,
+  "date_from": "0001-01-01T00:00:00+00:00",
+  "date_to": "0001-01-01T00:00:00+00:00"
+}
+
+### transactions2
+POST  http://127.0.0.1:8000/api/v1/transactions/
+Content-Type: application/json
+
+{
+  "page": 1,
+  "page_size": 10,
+  "hash": "e79a5f1ad9299c5e6c1b8b6ad5f1602fa64a3c7e",
+  "from": "",
+  "to": "",
+  "block_num": 0,
+  "date_from": "2023-01-26T11:55:07+02:00",
+  "date_to": "2023-01-27T11:55:07+02:00"
+}
+
