@@ -1,10 +1,7 @@
 package settings
 
 import (
-	"flag"
 	"fmt"
-	"github.com/pkg/errors"
-	"gopkg.in/yaml.v3"
 	"os"
 	"time"
 )
@@ -21,7 +18,9 @@ type HTTPConfig struct {
 }
 
 func (h HTTPConfig) URL() string {
-	return fmt.Sprint(h.Host, ":", h.Port)
+	// return fmt.Sprint(h.Host, ":", h.Port)
+	herokuPORT := os.Getenv("PORT")
+	return ":" + herokuPORT
 }
 
 type MongoDBConfig struct {
@@ -36,28 +35,39 @@ type EtherscanAPIConfig struct {
 }
 
 func (c MongoDBConfig) ConnectionURL() string {
-	return fmt.Sprint("mongodb://", c.Host, ":", c.Port)
+	// return fmt.Sprint("mongodb://", c.Host, ":", c.Port)
+	return os.Getenv("MONGODB_URI")
 }
 
 func Init() (settings *Settings, err error) {
-	path := flag.String("config", "conf.yaml", "path to configuration file (must end with conf.yaml)")
-	flag.Parse()
-
-	data, err := os.ReadFile(*path)
-	if err != nil {
-		return
+	settings = &Settings{EtherscanAPI: EtherscanAPIConfig{
+		URL:      "https://api.etherscan.io/api",
+		ReqDelay: time.Second,
+		Key:      os.Getenv("API_KEY"),
+	},
+	MongoDB: MongoDBConfig{
+		DatabaseName: "mongo",
+	},
 	}
+	// path := flag.String("config", "conf.yaml", "path to configuration file (must end with conf.yaml)")
+	// flag.Parse()
+	//
+	// data, err := os.ReadFile(*path)
+	// if err != nil {
+	// 	return
+	// }
+	//
+	// settings = &Settings{}
 
-	settings = &Settings{}
-	err = yaml.Unmarshal(data, settings)
-	if err != nil {
-		return
-	}
-
-	err = validate(settings)
-	if err != nil {
-		return nil, errors.Wrap(err, "config validation error")
-	}
+	// err = yaml.Unmarshal(data, settings)
+	// if err != nil {
+	// 	return
+	// }
+	//
+	// err = validate(settings)
+	// if err != nil {
+	// 	return nil, errors.Wrap(err, "config validation error")
+	// }
 	return
 }
 
